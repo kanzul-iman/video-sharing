@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextVision - Search Videos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .search-section {
+      padding: 40px 0;
+      background: #111;
+    }
+
+    .search-bar input {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 25px;
+      width: 100%;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .video-card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+    }
+
+    .video-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .video-info {
+      padding: 10px 15px;
+    }
+
+    .footer {
+      background: #1a1a1a;
+      padding: 40px 0;
+      color: #aaa;
+    }
+
+    .footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #00ffc8;
+    }
+
+    .footer h5 {
+      color: #fff;
+    }
+
+    .no-results {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top py-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">NextVision</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html">Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="video.html">Watch</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.html">My Profile</a></li>
+      </ul>
+
+      <form class="d-flex search-bar" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search pulse..." aria-label="Search" />
+      </form>
+
+      <a href="#" class="icon-btn"><i class="fas fa-bell"></i></a>
+      <a href="#" class="icon-btn"><i class="fas fa-user-circle"></i></a>
+      <a href="#" class="upload-glow">Upload</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Search Bar -->
+<section class="search-section">
+  <div class="container">
+    <h2 class="text-info fw-bold mb-4"><i class="fas fa-search me-2"></i>Search Videos</h2>
+    <div class="search-bar mb-4">
+      <input type="text" id="searchInput" placeholder="Type to search like 'travel', 'web', 'funny'..." onkeyup="filterVideos()">
+    </div>
+
+    <div class="row" id="videoResults">
+      <!-- Video Cards Go Here -->
+    </div>
+
+    <div id="noResults" class="no-results" style="display: none;">No videos found for your search.</div>
+  </div>
+</section>
+
+<!-- Footer Start -->
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+  <div class="container text-md-start">
+    <div class="row">
+
+      <!-- Logo & About -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+        <h4 class="text-info fw-bold mb-3">NextVision</h4>
+        <p class="text-muted">
+          Your go-to platform for discovering amazing content. Watch, share, and get inspired. We combine technology with creativity to shape the future.
+        </p>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase fw-bold mb-3">Quick Links</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-muted text-decoration-none d-block">Home</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">About</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Videos</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Categories</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Useful Resources -->
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase fw-bold mb-3">Resources</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-muted text-decoration-none d-block">FAQs</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Privacy Policy</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Terms & Conditions</a></li>
+          <li><a href="#" class="text-muted text-decoration-none d-block">Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Social -->
+      <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-4">
+        <h6 class="text-uppercase fw-bold mb-3">Contact</h6>
+        <p class="text-muted"><i class="fas fa-envelope me-2"></i>support@nextvision.com</p>
+        <p class="text-muted"><i class="fas fa-phone me-2"></i>+92 123 456 7890</p>
+        <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Karachi, Pakistan</p>
+
+        <div class="mt-3">
+          <a href="#" class="text-muted me-3 fs-5"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-muted me-3 fs-5"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-muted me-3 fs-5"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-muted fs-5"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Newsletter -->
+    <div class="row mt-4">
+      <div class="col-md-6 mx-auto">
+        <h6 class="text-uppercase fw-bold mb-3 text-center">Subscribe to Our Newsletter</h6>
+        <form class="d-flex justify-content-center">
+          <input type="email" class="form-control w-50 rounded-start-pill" placeholder="Enter your email" required>
+          <button class="btn btn-info rounded-end-pill px-4" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <hr class="border-secondary mt-5">
+    <div class="text-center text-muted">
+      &copy; 2025 <span class="text-info fw-semibold">NextVision</span>. All rights reserved.
+    </div>
+  </div>
+</footer>
+<!-- Footer End -->
+
+<script>
+  const videos = [
+    {
+      title: "Epic Travel Vlog",
+      category: "travel",
+      views: "12K views · 1 day ago",
+      thumb: "https://placehold.co/300x180?text=Travel+1"
+    },
+    {
+      title: "Top 10 Web Development Tips",
+      category: "web",
+      views: "18K views · 2 days ago",
+      thumb: "https://placehold.co/300x180?text=Web+Tips"
+    },
+    {
+      title: "Funny Cat Compilation",
+      category: "funny",
+      views: "120K views · 3 days ago",
+      thumb: "https://placehold.co/300x180?text=Funny+Cat"
+    },
+    {
+      title: "How to Build a Website",
+      category: "web",
+      views: "50K views · 5 days ago",
+      thumb: "https://placehold.co/300x180?text=Website+Tutorial"
+    },
+    {
+      title: "Best Travel Destinations 2025",
+      category: "travel",
+      views: "78K views · 1 week ago",
+      thumb: "https://placehold.co/300x180?text=Travel+Destinations"
+    },
+    {
+      title: "Laugh Out Loud - Pranks",
+      category: "funny",
+      views: "93K views · 4 days ago",
+      thumb: "https://placehold.co/300x180?text=Pranks"
+    }
+  ];
+
+  function filterVideos() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('videoResults');
+    const noResults = document.getElementById('noResults');
+
+    container.innerHTML = "";
+
+    const filtered = videos.filter(video =>
+      video.title.toLowerCase().includes(search) ||
+      video.category.toLowerCase().includes(search)
+    );
+
+    if (filtered.length === 0) {
+      noResults.style.display = "block";
+    } else {
+      noResults.style.display = "none";
+    }
+
+    filtered.forEach(video => {
+      const col = document.createElement("div");
+      col.className = "col-md-4 mb-4";
+
+      col.innerHTML = `
+        <div class="video-card">
+          <img src="${video.thumb}" alt="${video.title}">
+          <div class="video-info">
+            <h6>${video.title}</h6>
+            <small>${video.views}</small>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(col);
+    });
+  }
+
+  // Load all videos initially
+  window.onload = filterVideos;
+</script>
+
+</body>
+</html>
